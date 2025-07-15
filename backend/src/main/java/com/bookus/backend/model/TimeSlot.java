@@ -4,39 +4,28 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "appointment")
-public class Appointment {
-
+@Table(name = "timeSlot")
+public class TimeSlot {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private LocalDate date;
-    private LocalTime time;
-
-    @Enumerated(EnumType.STRING)
-    private AppointmentStatus status;
+    private LocalTime startTime;
+    private LocalTime endTime;
 
     @ManyToOne
-    private Service service;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
-
-    @ManyToOne
-    @JoinColumn(name = "provider_id")
     private User provider;
+
+    private boolean isBooked = false;
 
     public long getId() {
         return id;
@@ -54,28 +43,20 @@ public class Appointment {
         this.date = date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public AppointmentStatus getStatus() {
-        return status;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public void setStatus(AppointmentStatus status) {
-        this.status = status;
-    }
-
-    public User getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public User getProvider() {
@@ -86,7 +67,15 @@ public class Appointment {
         this.provider = provider;
     }
 
+    public boolean isBooked() {
+        return isBooked;
+    }
+
+    public void setBooked(boolean isBooked) {
+        this.isBooked = isBooked;
+    }
+
     
-    
+
     
 }

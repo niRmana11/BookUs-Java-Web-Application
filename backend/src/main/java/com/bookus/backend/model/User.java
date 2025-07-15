@@ -31,6 +31,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany
+    private List<Service> services;
+
+    @OneToMany
+    private List<TimeSlot> timeSlots;
+
     // Optional: One user can have multiple appointments as a customer
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Appointment> customerAppointments;
