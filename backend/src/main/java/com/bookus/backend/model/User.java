@@ -1,8 +1,8 @@
 package com.bookus.backend.model;
 
-import java.util.List;
+// import java.util.List;
 
-import jakarta.persistence.CascadeType;
+// import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,7 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+// import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,19 +31,19 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
-    private List<Service> services;
+    // @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    // private List<Service> services;
 
-    @OneToMany
-    private List<TimeSlot> timeSlots;
+    // @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    // private List<TimeSlot> timeSlots;
 
-    // Optional: One user can have multiple appointments as a customer
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Appointment> customerAppointments;
+    // // Optional: One user can have multiple appointments as a customer
+    // @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    // private List<Appointment> customerAppointments;
 
-    // Optional: One user can have multiple appointments as a provider
-    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
-    private List<Appointment> providerAppointments;
+    // // Optional: One user can have multiple appointments as a provider
+    // @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    // private List<Appointment> providerAppointments;
 
     public long getId() {
         return id;
@@ -85,21 +85,21 @@ public class User {
         this.role = role;
     }
 
-    public List<Appointment> getCustomerAppointments() {
-        return customerAppointments;
-    }
+    // public List<Appointment> getCustomerAppointments() {
+    //     return customerAppointments;
+    // }
 
-    public void setCustomerAppointments(List<Appointment> customerAppointments) {
-        this.customerAppointments = customerAppointments;
-    }
+    // public void setCustomerAppointments(List<Appointment> customerAppointments) {
+    //     this.customerAppointments = customerAppointments;
+    // }
 
-    public List<Appointment> getProviderAppointments() {
-        return providerAppointments;
-    }
+    // public List<Appointment> getProviderAppointments() {
+    //     return providerAppointments;
+    // }
 
-    public void setProviderAppointments(List<Appointment> providerAppointments) {
-        this.providerAppointments = providerAppointments;
-    }
+    // public void setProviderAppointments(List<Appointment> providerAppointments) {
+    //     this.providerAppointments = providerAppointments;
+    // }
 
    
 

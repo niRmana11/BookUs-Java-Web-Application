@@ -8,7 +8,7 @@ import com.bookus.backend.model.TimeSlot;
 
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
 
-    List<TimeSlot> findByProviderId(Long providerId);
+    List<TimeSlot> findByProvider_Id(Long providerId);
 
     List<TimeSlot> findByProviderIdAndIsBookedFalse(Long providerId);
     

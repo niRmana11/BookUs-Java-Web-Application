@@ -28,7 +28,7 @@ public class ServiceController {
 
     @GetMapping("/provider/{providerId}")
     public List<Service> getServicesByProvider(@PathVariable Long providerId) {
-        return serviceRepository.findByProviderId(providerId);
+        return serviceRepository.findByProvider_Id(providerId);
     }
     
 }

@@ -28,7 +28,7 @@ public class TimeSlotController {
 
     @GetMapping("/provider/{providerId}")
     public List<TimeSlot> getTimeSlotsByProvider(@PathVariable Long providerId) {
-        return timeSlotRepository.findByProviderId(providerId);
+        return timeSlotRepository.findByProvider_Id(providerId);
     }
 
     @GetMapping("/provider/{providerId}/available")

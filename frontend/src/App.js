@@ -1,12 +1,20 @@
-import React from 'react';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
   return (
-    <div className="container mt-5">
-      <h1>Welcome to BookUs</h1>
-      <p>This is your appointment booking system.</p>
-    </div>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register/>}/>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App;

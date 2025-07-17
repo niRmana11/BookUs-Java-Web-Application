@@ -31,13 +31,13 @@ public class AppointmentController {
     // get appointment by customer id
     @GetMapping("/customer/{customerId}")
     public List<Appointment> getByCustomer(@PathVariable Long customerId) {
-        return appointmentRepository.findByCustomerId(customerId);
+        return appointmentRepository.findByCustomer_Id(customerId);
     }
 
     // get appointment by provider id
     @GetMapping("/provider/{providerId}")
     public List<Appointment> getByProvider(@PathVariable Long providerId) {
-        return appointmentRepository.findByProvider(providerId);
+        return appointmentRepository.findByProvider_Id(providerId);
     }
     
 }

@@ -9,7 +9,7 @@ import com.bookus.backend.model.Appointment;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-    List<Appointment> findByCustomerId(Long customerId);
-    List<Appointment> findByProvider(Long providerId);
+    List<Appointment> findByCustomer_Id(Long customerId);
+    List<Appointment> findByProvider_Id(Long providerId);
     
 }

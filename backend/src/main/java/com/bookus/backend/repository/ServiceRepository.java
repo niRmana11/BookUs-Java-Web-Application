@@ -8,6 +8,6 @@ import com.bookus.backend.model.Service;
 
 public interface ServiceRepository extends JpaRepository<Service, Long> {
 
-    List<Service> findByProviderId(Long providerId);
+    List<Service> findByProvider_Id(Long providerId);
     
 }
