@@ -1,5 +1,7 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Await, useNavigate } from "react-router-dom";
+import API_URL from "../api/config";
 
 export default function Login() {
 
@@ -9,15 +11,27 @@ export default function Login() {
         password: "",
     });
 
+    const [error, setError] = useState("");
+
     function handleChange(e) {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        console.log("Login data:", formData);
-        // TODO: connect to backend
-        navigate("/dashboard");
+        try {
+            const res = await axios.post(`${API_URL}/users/login`, formData);
+            console.log(res.data);
+
+            // Optional: Save user to localStorage or context
+            localStorage.setItem("bookus_user", JSON.stringify(res.data));
+
+            navigate("/");
+
+        } catch(err) {
+            console.error(err);
+            setError("Invalid email or password. Please try again.")
+        }
     }
 
     return (
