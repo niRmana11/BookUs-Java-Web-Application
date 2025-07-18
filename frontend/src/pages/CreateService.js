@@ -21,13 +21,18 @@ export default function CreateService() {
 
     // load categories
     useEffect(() => {
-        axios.get(`${API_URL}/categories`)
-            .then(res => setCategories(res.data))
-            .catch(err => {
-                console.error(err);
-                setError("Failed to load categories");
-            });
-    }, []);
+    axios.get(`${API_URL}/categories`)
+        .then(res => {
+            
+            setCategories(res.data);
+        })
+        .catch(err => {
+            console.error("Error loading categories:", err);
+            setCategories([]); // fallback to empty array
+            setError("Failed to load categories");
+        });
+}, []);
+
 
     function handleChange(e) {
         setFormData({
@@ -44,7 +49,7 @@ export default function CreateService() {
             description: formData.description,
             durationInMinutes: parseInt(formData.durationInMinutes),
             price: parseFloat(formData.price),
-            category: { id: formData.categoryId },
+            category: { id: parseInt(formData.categoryId) },
             provider: { id: provider.id }
         };
 
@@ -121,8 +126,9 @@ export default function CreateService() {
           >
             <option value="">-- Select Category --</option>
             {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>{cat.name}</option>
-            ))}
+  <option key={cat.id} value={cat.id}>{cat.name}</option>
+))}
+
           </select>
         </div>
 

@@ -1,8 +1,21 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import API_URL from "../api/config";
 
 export default function ProviderDashboard() {
-  const user = JSON.parse(localStorage.getItem("bookus_user"));
+    const user = JSON.parse(localStorage.getItem("bookus_user"));
+    
+    const [services, setServices] = useState([]);
+
+    useEffect(() => {
+        if (user?.id) {
+            axios
+                .get(`${API_URL}/services/provider/${user.id}`)
+                .then((res) => setServices(res.data))
+                .then((err) => console.error("Failed to load services", err));
+        }
+    }, [user]);
 
   return (
     <div className="container mt-5">
@@ -15,7 +28,26 @@ export default function ProviderDashboard() {
 
       <div className="mt-4">
         <h4>Your Services</h4>
-        {/* Later: Add/manage services */}
+        {services.length === 0 ? (
+        <p>No services found.</p>
+      ) : (
+        <div className="row">
+          {services.map((service) => (
+            <div className="col-md-6 mb-3" key={service.id}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title">{service.name}</h5>
+                  <p className="card-text">{service.description}</p>
+                  <p>💰 {service.price} LKR</p>
+                  <p>🕒 {service.durationInMinutes} minutes</p>
+                  <p>📂 Category: {service.category?.name}</p>
+                  {/* 🔜 Add time slot button here later */}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       </div>
     </div>
   );
