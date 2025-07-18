@@ -17,6 +17,7 @@ public class Service {
     private String name;
     private String description;
     private int durationInMinutes;
+    private double price;
 
     @ManyToOne
     private User provider;
@@ -62,6 +63,22 @@ public class Service {
 
     public void setProvider(User provider) {
         this.provider = provider;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     

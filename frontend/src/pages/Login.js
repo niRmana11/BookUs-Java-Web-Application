@@ -23,10 +23,18 @@ export default function Login() {
             const res = await axios.post(`${API_URL}/users/login`, formData);
             console.log(res.data);
 
+            const user = res.data;
+
             // Optional: Save user to localStorage or context
             localStorage.setItem("bookus_user", JSON.stringify(res.data));
 
-            navigate("/");
+            if (user.role === "CUSTOMER") {
+                navigate("/customer-dashboard");
+            } else if (user.role === "PROVIDER") {
+                navigate("/provider-dashboard");
+            } else {
+                navigate("/");
+            }
 
         } catch(err) {
             console.error(err);
