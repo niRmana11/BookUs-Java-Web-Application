@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bookus.backend.dto.ServiceDTO;
+import com.bookus.backend.dto.ServiceResponseDTO;
 import com.bookus.backend.model.Category;
 import com.bookus.backend.model.Service;
 import com.bookus.backend.model.User;
@@ -50,12 +51,28 @@ public class ServiceController {
     }
 
     @GetMapping
-    public List<Service> getAllServices() {
-        return serviceRepository.findAll();
+    public List<ServiceResponseDTO> getAllServices() {
+        return serviceRepository.findAll().stream()
+                .map(service -> new ServiceResponseDTO(
+                        service.getId(),
+                        service.getName(),
+                        service.getDescription(),
+                        service.getDurationInMinutes(),
+                        service.getPrice(),
+                        service.getCategory().getName()))
+                .toList();
     }
 
     @GetMapping("/provider/{providerId}")
-    public List<Service> getServicesByProvider(@PathVariable Long providerId) {
-        return serviceRepository.findByProvider_Id(providerId);
+    public List<ServiceResponseDTO> getServicesByProvider(@PathVariable Long providerId) {
+        return serviceRepository.findByProvider_Id(providerId).stream()
+                .map(service -> new ServiceResponseDTO(
+                        service.getId(),
+                        service.getName(),
+                        service.getDescription(),
+                        service.getDurationInMinutes(),
+                        service.getPrice(),
+                        service.getCategory().getName()))
+                .toList();
     }
 }

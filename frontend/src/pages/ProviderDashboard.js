@@ -9,13 +9,14 @@ export default function ProviderDashboard() {
     const [services, setServices] = useState([]);
 
     useEffect(() => {
-        if (user?.id) {
-            axios
-                .get(`${API_URL}/services/provider/${user.id}`)
-                .then((res) => setServices(res.data))
-                .then((err) => console.error("Failed to load services", err));
-        }
-    }, [user]);
+    
+    if (user?.id) {
+        axios
+            .get(`${API_URL}/services/provider/${user.id}`)
+            .then((res) => setServices(res.data))
+            .catch((err) => console.error("Failed to load services", err));
+    }
+}, []);
 
   return (
     <div className="container mt-5">
@@ -40,7 +41,7 @@ export default function ProviderDashboard() {
                   <p className="card-text">{service.description}</p>
                   <p>💰 {service.price} LKR</p>
                   <p>🕒 {service.durationInMinutes} minutes</p>
-                  <p>📂 Category: {service.category?.name}</p>
+                  <p>📂 Category: {service.categoryName}</p>
                   {/* 🔜 Add time slot button here later */}
                 </div>
               </div>
