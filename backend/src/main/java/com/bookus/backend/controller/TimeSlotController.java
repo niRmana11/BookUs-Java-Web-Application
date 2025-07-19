@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bookus.backend.dto.TimeSlotDTO;
 import com.bookus.backend.model.TimeSlot;
-import com.bookus.backend.repository.TimeSlotRepository;
 import com.bookus.backend.service.TimeSlotService;
 
 
@@ -17,16 +16,16 @@ import com.bookus.backend.service.TimeSlotService;
 @CrossOrigin
 public class TimeSlotController {
 
-    @Autowired
-    private TimeSlotRepository timeSlotRepository;
-
+    
     @Autowired
     private TimeSlotService timeSlotService;
 
-    @GetMapping("/provider/{providerId}")
-    public List<TimeSlot> getTimeSlotsByProvider(@PathVariable Long providerId) {
-        return timeSlotRepository.findByProvider_Id(providerId);
-    }
+@GetMapping("/timeslots/service/{serviceId}")
+public ResponseEntity<List<TimeSlot>> getTimeSlotsForService(@PathVariable Long serviceId) {
+    return ResponseEntity.ok(timeSlotService.getTimeSlotsByServiceId(serviceId));
+}
+
+
 
      @PostMapping("/generate")
     public ResponseEntity<String> createTimeSlots(@RequestBody TimeSlotDTO dto) {

@@ -7,6 +7,7 @@ export default function ProviderDashboard() {
   const user = JSON.parse(localStorage.getItem("bookus_user"));
 
   const [services, setServices] = useState([]);
+  const [timeSlots, setTimeSlots] = useState({});
   const [showFormForService, setShowFormForService] = useState(null);
   const [formData, setFormData] = useState({
     date: "",
@@ -20,10 +21,25 @@ export default function ProviderDashboard() {
     if (user?.id) {
       axios
         .get(`${API_URL}/services/provider/${user.id}`)
-        .then((res) => setServices(res.data))
+        .then((res) => {
+          setServices(res.data);
+          res.data.forEach((service) => fetchTimeSlots(service.id));
+        })
         .catch((err) => console.error("Failed to load services", err));
     }
   }, []);
+
+  const fetchTimeSlots = async (serviceId) => {
+    try {
+      const res = await axios.get(`${API_URL}/timeslots/service/${serviceId}`);
+      setTimeSlots((prev) => ({
+        ...prev,
+        [serviceId]: res.data
+      }));
+    } catch (err) {
+      console.error("Failed to fetch timeslots:", err);
+    }
+  };
 
   const handleInputChange = (e) => {
     setFormData({
@@ -31,7 +47,6 @@ export default function ProviderDashboard() {
       [e.target.name]: e.target.value
     });
   };
-
 
   const handleTimeSlotSubmit = async (e, serviceId) => {
     e.preventDefault();
@@ -49,6 +64,7 @@ export default function ProviderDashboard() {
       setErrorMsg("");
       setFormData({ date: "", startTime: "", endTime: "" });
       setShowFormForService(null);
+      fetchTimeSlots(serviceId); // reload time slots
     } catch (err) {
       console.error("Time slot creation failed:", err);
       setErrorMsg("❌ Failed to create time slots.");
@@ -56,6 +72,24 @@ export default function ProviderDashboard() {
     }
   };
 
+  const renderTimeSlots = (slots) => {
+    if (!slots || slots.length === 0) return <p>No time slots yet.</p>;
+
+    return (
+      <div className="mt-2 d-flex flex-wrap gap-2">
+        {slots.map((slot) => (
+          <div
+            key={slot.id}
+            className={`badge rounded-pill px-3 py-2 ${
+              slot.booked ? "bg-danger" : "bg-success"
+            }`}
+          >
+            {slot.startTime}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="container mt-5">
@@ -87,7 +121,7 @@ export default function ProviderDashboard() {
                     <p>📂 Category: {service.categoryName}</p>
 
                     <button
-                      className="btn btn-sm btn-outline-success"
+                      className="btn btn-sm btn-outline-success mb-2"
                       onClick={() =>
                         setShowFormForService(
                           showFormForService === service.id ? null : service.id
@@ -99,7 +133,7 @@ export default function ProviderDashboard() {
 
                     {showFormForService === service.id && (
                       <form
-                        className="mt-3"
+                        className="mt-2"
                         onSubmit={(e) => handleTimeSlotSubmit(e, service.id)}
                       >
                         <div className="mb-2">
@@ -144,6 +178,8 @@ export default function ProviderDashboard() {
                       </form>
                     )}
 
+                    <h6 className="mt-3">🗓️ Time Slots:</h6>
+                    {renderTimeSlots(timeSlots[service.id])}
                   </div>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 package com.bookus.backend.service;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,11 @@ public class TimeSlotService {
 
             current = current.plusMinutes(duration);
         }
+    }
+
+    // ✅ Get all time slots for a specific service
+    public List<TimeSlot> getTimeSlotsByServiceId(Long serviceId) {
+        return timeSlotRepository.findByService_Id(serviceId);
     }
     
 }
