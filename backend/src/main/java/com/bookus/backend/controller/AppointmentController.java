@@ -3,10 +3,13 @@ package com.bookus.backend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.bookus.backend.dto.BookingRequestDTO;
 import com.bookus.backend.model.Appointment;
 import com.bookus.backend.repository.AppointmentRepository;
+import com.bookus.backend.service.AppointmentService;
 
 @RestController
 @RequestMapping("/api/appointments")
@@ -16,10 +19,17 @@ public class AppointmentController {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    // create an appointment
-    @PostMapping
-    public Appointment createAppointment(@RequestBody Appointment appointment) {
-        return appointmentRepository.save(appointment);
+    @Autowired
+    private AppointmentService appointmentService;
+
+    @PostMapping("/book")
+    public ResponseEntity<String> bookAppointment(@RequestBody BookingRequestDTO dto) {
+        try {
+            appointmentService.bookAppointment(dto);
+            return ResponseEntity.ok("Appointment booked successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("❌ " + e.getMessage());
+        }
     }
 
     // get all appointments
@@ -39,5 +49,5 @@ public class AppointmentController {
     public List<Appointment> getByProvider(@PathVariable Long providerId) {
         return appointmentRepository.findByProvider_Id(providerId);
     }
-    
+
 }

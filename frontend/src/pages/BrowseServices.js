@@ -5,6 +5,37 @@ import API_URL from "../api/config";
 export default function BrowseServices() {
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [bookingStatus, setBookingStatus] = useState("");
+
+    const user = JSON.parse(localStorage.getItem("bookus_user"));
+
+    // Booking handler
+    const handleBook = async (slot, service) => {
+        if (!user) {
+            alert("Please login to book an appointment.");
+            return;
+        }
+
+        try {
+            await axios.post(`${API_URL}/appointments/book`, {
+                customerId: user.id,
+                providerId: service.providerId, // Make sure your DTO sends providerId
+                serviceId: service.id,
+                timeSlotId: slot.id,
+            });
+
+            setBookingStatus(`✅ Appointment booked for ${slot.date} at ${slot.startTime}`);
+
+            // Refresh the services to get updated slot availability (optional)
+            setLoading(true);
+            const res = await axios.get(`${API_URL}/services/public`);
+            setServices(res.data);
+            setLoading(false);
+        } catch (error) {
+            console.error("Booking failed:", error);
+            setBookingStatus("❌ Booking failed. Please try again.");
+        }
+    };
 
     useEffect(() => {
         axios
@@ -17,6 +48,15 @@ export default function BrowseServices() {
     return (
         <div className="container mt-5">
             <h2 className="mb-4">Available Services</h2>
+
+            {bookingStatus && (
+                <div
+                    className={`alert ${bookingStatus.startsWith("✅") ? "alert-success" : "alert-danger"
+                        }`}
+                >
+                    {bookingStatus}
+                </div>
+            )}
 
             {loading ? (
                 <p>Loading services...</p>
@@ -40,12 +80,23 @@ export default function BrowseServices() {
                                         <p>No available slots.</p>
                                     ) : (
                                         <div className="d-flex flex-wrap gap-2">
-                                            {service.availableTimeSlots.map((slot) => (
-                                                <div key={slot.id} className="badge bg-success px-3 py-2">
-                                                    {slot.date} - {slot.startTime}
-                                                </div>
-                                            ))}
-                                        </div>
+                      {service.availableTimeSlots.map((slot) => {
+                        const slotClass = slot.booked
+                          ? "bg-danger text-white"
+                          : "bg-success text-white clickable";
+
+                        return (
+                          <div
+                            key={slot.id}
+                            className={`badge px-3 py-2 ${slotClass}`}
+                            style={{ cursor: slot.booked ? "not-allowed" : "pointer" }}
+                            onClick={() => !slot.booked && handleBook(slot, service)}
+                          >
+                            {slot.date} - {slot.startTime}
+                          </div>
+                        );
+                      })}
+                    </div>
                                     )}
 
 

@@ -56,28 +56,26 @@ public class ServiceController {
         return ResponseEntity.ok(serviceRepository.save(service));
     }
 
- 
-@GetMapping("/public")
-public ResponseEntity<List<ServiceWithSlotsDTO>> getAllPublicServices() {
-    List<Service> services = serviceRepository.findAll();
+    @GetMapping("/public")
+    public ResponseEntity<List<ServiceWithSlotsDTO>> getAllPublicServices() {
+        List<Service> services = serviceRepository.findAll();
 
-    List<ServiceWithSlotsDTO> response = services.stream().map(service -> {
-        List<TimeSlot> slots = timeSlotRepository.findByService_IdAndIsBookedFalse(service.getId());
-        return new ServiceWithSlotsDTO(
-            service.getId(),
-            service.getName(),
-            service.getDescription(),
-            service.getDurationInMinutes(),
-            service.getPrice(),
-            service.getCategory() != null ? service.getCategory().getName() : null,
-            service.getProvider() != null ? service.getProvider().getName() : null,
-            slots
-        );
-    }).toList();
+        List<ServiceWithSlotsDTO> response = services.stream().map(service -> {
+            List<TimeSlot> slots = timeSlotRepository.findByService_IdAndIsBookedFalse(service.getId());
+            return new ServiceWithSlotsDTO(
+                    service.getId(),
+                    service.getName(),
+                    service.getDescription(),
+                    service.getDurationInMinutes(),
+                    service.getPrice(),
+                    service.getCategory() != null ? service.getCategory().getName() : null,
+                    service.getProvider() != null ? service.getProvider().getName() : null,
+                    service.getProvider() != null ? service.getProvider().getId() : null,
+                    slots);
+        }).toList();
 
-    return ResponseEntity.ok(response);
-}
-
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/provider/{providerId}")
     public List<ServiceResponseDTO> getServicesByProvider(@PathVariable Long providerId) {

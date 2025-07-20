@@ -1,7 +1,6 @@
 package com.bookus.backend.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 
 
 import jakarta.persistence.Entity;
@@ -22,9 +21,6 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private LocalDate date;
-    private LocalTime time;
-
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
 
@@ -39,6 +35,12 @@ public class Appointment {
     @JoinColumn(name = "provider_id")
     private User provider;
 
+    @ManyToOne
+    @JoinColumn(name = "time_slot_id")
+    private TimeSlot timeSlot;
+
+    private String note;
+
     public long getId() {
         return id;
     }
@@ -47,28 +49,20 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-    }
-
     public AppointmentStatus getStatus() {
         return status;
     }
 
     public void setStatus(AppointmentStatus status) {
         this.status = status;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public User getCustomer() {
@@ -87,6 +81,24 @@ public class Appointment {
         this.provider = provider;
     }
 
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+
+    
     
     
     

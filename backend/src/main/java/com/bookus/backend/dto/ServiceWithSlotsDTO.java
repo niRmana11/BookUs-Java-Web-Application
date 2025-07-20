@@ -13,10 +13,11 @@ public class ServiceWithSlotsDTO {
     private double price;
     private String categoryName;
     private String providerName;
+    private Long providerId;
     private List<TimeSlot> availableTimeSlots;
 
     public ServiceWithSlotsDTO(Long id, String name, String description, int durationInMinutes, double price,
-            String categoryName, String providerName, List<TimeSlot> availableTimeSlots) {
+            String categoryName, String providerName, Long providerId, List<TimeSlot> availableTimeSlots) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -24,6 +25,7 @@ public class ServiceWithSlotsDTO {
         this.price = price;
         this.categoryName = categoryName;
         this.providerName = providerName;
+        this.providerId = providerId;
         this.availableTimeSlots = availableTimeSlots;
     }
 
@@ -91,7 +93,15 @@ public class ServiceWithSlotsDTO {
         this.availableTimeSlots = availableTimeSlots;
     }
 
-    // getters and setters
+    public Long getProviderId() {
+        return providerId;
+    }
+
+    public void setProviderId(Long providerId) {
+        this.providerId = providerId;
+    }
+
+    
     
 }
     
