@@ -20,7 +20,7 @@ public class TimeSlotController {
     @Autowired
     private TimeSlotService timeSlotService;
 
-@GetMapping("/timeslots/service/{serviceId}")
+@GetMapping("/service/{serviceId}")
 public ResponseEntity<List<TimeSlot>> getTimeSlotsForService(@PathVariable Long serviceId) {
     return ResponseEntity.ok(timeSlotService.getTimeSlotsByServiceId(serviceId));
 }
