@@ -1,28 +1,31 @@
 package com.bookus.backend.dto;
+import java.util.List;
+
+import com.bookus.backend.model.TimeSlot;
 
 
-public class ServiceResponseDTO {
+public class ServiceWithSlotsDTO {
+
     private Long id;
     private String name;
     private String description;
     private int durationInMinutes;
     private double price;
     private String categoryName;
-    
-    
+    private String providerName;
+    private List<TimeSlot> availableTimeSlots;
 
-    public ServiceResponseDTO(Long id, String name, String description, int durationInMinutes, double price,
-            String categoryName) {
+    public ServiceWithSlotsDTO(Long id, String name, String description, int durationInMinutes, double price,
+            String categoryName, String providerName, List<TimeSlot> availableTimeSlots) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.durationInMinutes = durationInMinutes;
         this.price = price;
         this.categoryName = categoryName;
-        
+        this.providerName = providerName;
+        this.availableTimeSlots = availableTimeSlots;
     }
-    
-
 
     public Long getId() {
         return id;
@@ -72,9 +75,26 @@ public class ServiceResponseDTO {
         this.categoryName = categoryName;
     }
 
-    
+    public String getProviderName() {
+        return providerName;
+    }
 
-    
-  
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
+
+    public List<TimeSlot> getAvailableTimeSlots() {
+        return availableTimeSlots;
+    }
+
+    public void setAvailableTimeSlots(List<TimeSlot> availableTimeSlots) {
+        this.availableTimeSlots = availableTimeSlots;
+    }
+
+    // getters and setters
     
 }
+    
+
+
+

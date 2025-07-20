@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bookus.backend.dto.ServiceDTO;
 import com.bookus.backend.dto.ServiceResponseDTO;
+import com.bookus.backend.dto.ServiceWithSlotsDTO;
 import com.bookus.backend.model.Category;
 import com.bookus.backend.model.Service;
+import com.bookus.backend.model.TimeSlot;
 import com.bookus.backend.model.User;
 import com.bookus.backend.repository.CategoryRepository;
 import com.bookus.backend.repository.ServiceRepository;
+import com.bookus.backend.repository.TimeSlotRepository;
 import com.bookus.backend.repository.UserRepository;
 
 @RestController
@@ -29,6 +32,9 @@ public class ServiceController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TimeSlotRepository timeSlotRepository;
 
     @PostMapping
     public ResponseEntity<?> createService(@RequestBody ServiceDTO dto) {
@@ -50,18 +56,28 @@ public class ServiceController {
         return ResponseEntity.ok(serviceRepository.save(service));
     }
 
-    @GetMapping
-    public List<ServiceResponseDTO> getAllServices() {
-        return serviceRepository.findAll().stream()
-                .map(service -> new ServiceResponseDTO(
-                        service.getId(),
-                        service.getName(),
-                        service.getDescription(),
-                        service.getDurationInMinutes(),
-                        service.getPrice(),
-                        service.getCategory().getName()))
-                .toList();
-    }
+ 
+@GetMapping("/public")
+public ResponseEntity<List<ServiceWithSlotsDTO>> getAllPublicServices() {
+    List<Service> services = serviceRepository.findAll();
+
+    List<ServiceWithSlotsDTO> response = services.stream().map(service -> {
+        List<TimeSlot> slots = timeSlotRepository.findByService_IdAndIsBookedFalse(service.getId());
+        return new ServiceWithSlotsDTO(
+            service.getId(),
+            service.getName(),
+            service.getDescription(),
+            service.getDurationInMinutes(),
+            service.getPrice(),
+            service.getCategory() != null ? service.getCategory().getName() : null,
+            service.getProvider() != null ? service.getProvider().getName() : null,
+            slots
+        );
+    }).toList();
+
+    return ResponseEntity.ok(response);
+}
+
 
     @GetMapping("/provider/{providerId}")
     public List<ServiceResponseDTO> getServicesByProvider(@PathVariable Long providerId) {

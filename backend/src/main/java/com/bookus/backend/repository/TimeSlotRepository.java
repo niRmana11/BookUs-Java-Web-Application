@@ -13,5 +13,8 @@ public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     List<TimeSlot> findByService_Id(Long serviceId);
 
     List<TimeSlot> findByProviderIdAndIsBookedFalse(Long providerId);
+
+   List<TimeSlot> findByService_IdAndIsBookedFalse(Long serviceId);
+
     
 }

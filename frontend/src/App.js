@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import ProviderDashboard from "./pages/ProviderDashboard";
 import CreateService from "./pages/CreateService";
+import BrowseServices from "./pages/BrowseServices";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/customer-dashboard" element={<CustomerDashboard />} />
         <Route path="/provider-dashboard" element={<ProviderDashboard />} />
         <Route path="/createService" element={<CreateService />} />
+        <Route path="/browse" element={<BrowseServices />} />
       </Routes>
     </Router>
   )
