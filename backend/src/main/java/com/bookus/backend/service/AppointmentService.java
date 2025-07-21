@@ -50,6 +50,7 @@ public class AppointmentService {
         appointment.setProvider(providerOpt.get());
         appointment.setService(serviceOpt.get());
         appointment.setTimeSlot(slot);
+        appointment.setNote(dto.getNote());
         appointment.setStatus(AppointmentStatus.PENDING); // or CONFIRMED
 
         appointmentRepository.save(appointment);

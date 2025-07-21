@@ -61,7 +61,7 @@ public class ServiceController {
         List<Service> services = serviceRepository.findAll();
 
         List<ServiceWithSlotsDTO> response = services.stream().map(service -> {
-            List<TimeSlot> slots = timeSlotRepository.findByService_IdAndIsBookedFalse(service.getId());
+            List<TimeSlot> slots = timeSlotRepository.findByService_Id(service.getId());
             return new ServiceWithSlotsDTO(
                     service.getId(),
                     service.getName(),
