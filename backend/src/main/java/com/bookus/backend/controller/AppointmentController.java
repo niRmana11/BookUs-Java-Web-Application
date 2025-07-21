@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bookus.backend.dto.BookingRequestDTO;
 import com.bookus.backend.model.Appointment;
+import com.bookus.backend.model.AppointmentStatus;
 import com.bookus.backend.repository.AppointmentRepository;
 import com.bookus.backend.service.AppointmentService;
 
@@ -49,5 +50,31 @@ public class AppointmentController {
     public List<Appointment> getByProvider(@PathVariable Long providerId) {
         return appointmentRepository.findByProvider_Id(providerId);
     }
+
+    // change appointment status
+@PutMapping("/{id}/status")
+public ResponseEntity<?> updateAppointmentStatus(
+        @PathVariable("id") Long appointmentId,
+        @RequestBody String status
+) {
+    try {
+        String cleanStatus = status.replace("\"", ""); // in case it's quoted
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+            .orElseThrow(() -> new RuntimeException("Appointment not found"));
+
+        AppointmentStatus newStatus = AppointmentStatus.valueOf(cleanStatus.toUpperCase());
+
+        appointment.setStatus(newStatus);
+        appointmentRepository.save(appointment);
+
+        return ResponseEntity.ok("✅ Status updated to " + newStatus.name());
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.badRequest().body("❌ Invalid status value");
+    } catch (Exception e) {
+        return ResponseEntity.status(500).body("❌ Error: " + e.getMessage());
+    }
+}
+
+
 
 }

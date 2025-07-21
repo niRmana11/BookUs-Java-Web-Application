@@ -42,16 +42,19 @@ public class User {
     @JsonIgnore
     private List<Service> services;
 
-    // @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
-    // private List<TimeSlot> timeSlots;
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<TimeSlot> timeSlots;
 
-    // // Optional: One user can have multiple appointments as a customer
-    // @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    // private List<Appointment> customerAppointments;
+    // Optional: One user can have multiple appointments as a customer
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Appointment> customerAppointments;
 
-    // // Optional: One user can have multiple appointments as a provider
-    // @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
-    // private List<Appointment> providerAppointments;
+    // Optional: One user can have multiple appointments as a provider
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Appointment> providerAppointments;
 
     public long getId() {
         return id;
