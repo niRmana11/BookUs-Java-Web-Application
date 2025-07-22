@@ -9,6 +9,7 @@ import ProviderDashboard from "./pages/ProviderDashboard";
 import CreateService from "./pages/CreateService";
 import BrowseServices from "./pages/BrowseServices";
 import ProviderAppointments from "./pages/ProviderAppointments";
+import CustomerProfile from "./pages/CustomerProfile";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/createService" element={<CreateService />} />
         <Route path="/browse" element={<BrowseServices />} />
         <Route path="/provider-appointments" element={<ProviderAppointments />} />
+        <Route path="/customer-profile" element={<CustomerProfile />} />
 
       </Routes>
     </Router>

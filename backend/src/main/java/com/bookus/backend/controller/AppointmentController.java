@@ -36,28 +36,17 @@ public class AppointmentController {
     }
 
    @GetMapping("/provider/{providerId}")
-public List<AppointmentDTO> getByProvider(@PathVariable Long providerId) {
-    return appointmentRepository.findDTOsByProviderId(providerId);
-}
+   public List<AppointmentDTO> getByProvider(@PathVariable Long providerId) {
+       return appointmentRepository.findDTOsByProviderId(providerId);
+   }
+
+   @GetMapping("/customer/{customerId}")
+   public List<AppointmentDTO> getByCustomer(@PathVariable Long customerId) {
+       return appointmentRepository.findDTOsByCustomerId(customerId);
+   }
 
 
-    // Optional: keep full entity version for customer if needed
-// @GetMapping("/customer/{customerId}")
-// public List<AppointmentDTO> getByCustomer(@PathVariable Long customerId) {
-//     List<Appointment> appointments = appointmentRepository.findByCustomer_Id(customerId);
 
-//     return appointments.stream().map(app -> {
-//         AppointmentDTO dto = new AppointmentDTO();
-//         dto.setId(app.getId());
-//         dto.setCustomerName(app.getCustomer() != null ? app.getCustomer().getName() : "N/A");
-//         dto.setServiceName(app.getService() != null ? app.getService().getName() : "N/A");
-//         dto.setDate(app.getTimeSlot() != null ? app.getTimeSlot().getDate().toString() : "");
-//         dto.setTime(app.getTimeSlot() != null ? app.getTimeSlot().getStartTime().toString() : "");
-//         dto.setStatus(app.getStatus().name());
-//         dto.setNote(app.getNote());
-//         return dto;
-//     }).collect(Collectors.toList());
-// }
 
 
     // Update appointment status

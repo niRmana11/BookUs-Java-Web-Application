@@ -13,6 +13,9 @@ export default function CustomerDashboard() {
      
 <Link to="/browse" className="btn btn-primary mt-3">
   Browse & Book Services
+      </Link>
+      <Link to="/customer-profile" className="btn btn-primary mt-3">
+  Profile
 </Link>
 
 
