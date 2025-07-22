@@ -5,12 +5,14 @@ import java.time.LocalTime;
 
 public class TimeSlotDTO {
 
+    private Long id;
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
     private Long providerId;
     private Long serviceId;
 
+    
 
 
     public LocalDate getDate() {
@@ -42,6 +44,12 @@ public class TimeSlotDTO {
     }
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     

@@ -26,6 +26,8 @@ public ResponseEntity<List<TimeSlotDTO>> getTimeSlotsForService(@PathVariable Lo
 
     List<TimeSlotDTO> dtos = timeSlots.stream().map(ts -> {
         TimeSlotDTO dto = new TimeSlotDTO();
+        dto.setId(ts.getId()); 
+
         dto.setDate(ts.getDate());
         dto.setStartTime(ts.getStartTime());
         dto.setEndTime(ts.getEndTime());
