@@ -1,7 +1,7 @@
 package com.bookus.backend.model;
 import jakarta.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,10 +25,12 @@ public class Service {
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
+    @JsonIgnore 
     private User provider;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @JsonIgnore 
     private Category category;
 
     public long getId() {

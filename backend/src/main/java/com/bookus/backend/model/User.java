@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 
-// import java.util.List;
 
-// import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,7 +15,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-// import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -96,21 +93,21 @@ public class User {
         this.role = role;
     }
 
-    // public List<Appointment> getCustomerAppointments() {
-    //     return customerAppointments;
-    // }
+    public List<Appointment> getCustomerAppointments() {
+        return customerAppointments;
+    }
 
-    // public void setCustomerAppointments(List<Appointment> customerAppointments) {
-    //     this.customerAppointments = customerAppointments;
-    // }
+    public void setCustomerAppointments(List<Appointment> customerAppointments) {
+        this.customerAppointments = customerAppointments;
+    }
 
-    // public List<Appointment> getProviderAppointments() {
-    //     return providerAppointments;
-    // }
+    public List<Appointment> getProviderAppointments() {
+        return providerAppointments;
+    }
 
-    // public void setProviderAppointments(List<Appointment> providerAppointments) {
-    //     this.providerAppointments = providerAppointments;
-    // }
+    public void setProviderAppointments(List<Appointment> providerAppointments) {
+        this.providerAppointments = providerAppointments;
+    }
 
    
 

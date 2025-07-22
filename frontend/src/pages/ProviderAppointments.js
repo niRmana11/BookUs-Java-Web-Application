@@ -17,7 +17,7 @@ export default function ProviderAppointments() {
                 .catch((err) => console.error("Failed to fetch appointments", err))
                 .finally(() => setLoading(false));
         }
-    }, [provider]);
+    }, [provider?.id]);
 
     const handleStatusChange = async (appointmentId, newStatus) => {
         try {
@@ -26,9 +26,10 @@ export default function ProviderAppointments() {
             });
 
             setStatusMessage(`✅ Appointment #${appointmentId} updated to ${newStatus}`);
-            // Refresh list
+
             const res = await axios.get(`${API_URL}/appointments/provider/${provider.id}`);
             setAppointments(res.data);
+
             setTimeout(() => setStatusMessage(""), 5000);
         } catch (error) {
             console.error("Status update failed", error);
@@ -69,13 +70,11 @@ export default function ProviderAppointments() {
                             {appointments.map((app) => (
                                 <tr key={app.id}>
                                     <td>{app.id}</td>
-                                    <td>{app.customer?.name || "N/A"}</td>
-                                    <td>{app.service?.name}</td>
-                                    <td>{app.timeSlot?.date}</td>
-                                    <td>{app.timeSlot?.startTime}</td>
-                                    <td>
-                                        <span className="badge bg-info">{app.status}</span>
-                                    </td>
+                                    <td>{app.customerName}</td>
+                                    <td>{app.serviceName}</td>
+                                    <td>{app.date}</td>
+                                    <td>{app.time}</td>
+                                    <td><span className="badge bg-info">{app.status}</span></td>
                                     <td>{app.note || "-"}</td>
                                     <td>
                                         {app.status === "PENDING" && (

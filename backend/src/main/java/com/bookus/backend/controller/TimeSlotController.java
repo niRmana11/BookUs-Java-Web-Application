@@ -21,9 +21,26 @@ public class TimeSlotController {
     private TimeSlotService timeSlotService;
 
 @GetMapping("/service/{serviceId}")
-public ResponseEntity<List<TimeSlot>> getTimeSlotsForService(@PathVariable Long serviceId) {
-    return ResponseEntity.ok(timeSlotService.getTimeSlotsByServiceId(serviceId));
+public ResponseEntity<List<TimeSlotDTO>> getTimeSlotsForService(@PathVariable Long serviceId) {
+    List<TimeSlot> timeSlots = timeSlotService.getTimeSlotsByServiceId(serviceId);
+
+    List<TimeSlotDTO> dtos = timeSlots.stream().map(ts -> {
+        TimeSlotDTO dto = new TimeSlotDTO();
+        dto.setDate(ts.getDate());
+        dto.setStartTime(ts.getStartTime());
+        dto.setEndTime(ts.getEndTime());
+        
+        // Safe navigation in case provider or service is lazy loaded or null
+        dto.setProviderId(ts.getProvider() != null ? ts.getProvider().getId() : null);
+        dto.setServiceId(ts.getService() != null ? ts.getService().getId() : null);
+        
+        return dto;
+    }).toList();
+
+    return ResponseEntity.ok(dtos);
 }
+
+
 
 
 

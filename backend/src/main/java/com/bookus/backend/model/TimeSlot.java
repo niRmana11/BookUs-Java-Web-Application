@@ -3,6 +3,7 @@ package com.bookus.backend.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,10 +27,12 @@ public class TimeSlot {
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
+    @JsonIgnore
     private User provider;
 
     @ManyToOne
     @JoinColumn(name = "service_id")
+    @JsonIgnore
     private Service service;
 
     private boolean isBooked = false;
