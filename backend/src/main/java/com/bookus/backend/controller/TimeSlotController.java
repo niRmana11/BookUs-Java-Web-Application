@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.bookus.backend.dto.TimeSlotDTO;
 import com.bookus.backend.model.TimeSlot;
+import com.bookus.backend.repository.TimeSlotRepository;
 import com.bookus.backend.service.TimeSlotService;
 
 
@@ -19,6 +20,9 @@ public class TimeSlotController {
     
     @Autowired
     private TimeSlotService timeSlotService;
+
+    @Autowired
+    private TimeSlotRepository timeSlotRepository;
 
 @GetMapping("/service/{serviceId}")
 public ResponseEntity<List<TimeSlotDTO>> getTimeSlotsForService(@PathVariable Long serviceId) {
@@ -43,13 +47,24 @@ public ResponseEntity<List<TimeSlotDTO>> getTimeSlotsForService(@PathVariable Lo
 }
 
 
-
-
-
      @PostMapping("/generate")
-    public ResponseEntity<String> createTimeSlots(@RequestBody TimeSlotDTO dto) {
-        timeSlotService.createTimeSlots(dto);
-        return ResponseEntity.ok("Time slots created successfully");
-    }
+     public ResponseEntity<String> createTimeSlots(@RequestBody TimeSlotDTO dto) {
+         timeSlotService.createTimeSlots(dto);
+         return ResponseEntity.ok("Time slots created successfully");
+     }
     
+    
+   @DeleteMapping("/service/{serviceId}")
+public ResponseEntity<?> deleteTimeSlotsByService(@PathVariable Long serviceId) {
+    List<TimeSlot> slots = timeSlotRepository.findByService_Id(serviceId);
+
+    List<TimeSlot> unbookedSlots = slots.stream()
+        .filter(slot -> !slot.isBooked()) // or slot.getAppointment() == null
+        .toList();
+
+    timeSlotRepository.deleteAll(unbookedSlots);
+    return ResponseEntity.ok("Unbooked time slots deleted");
+}
+
+
 }

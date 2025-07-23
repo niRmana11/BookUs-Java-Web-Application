@@ -24,31 +24,38 @@ public class TimeSlotService {
     private ServiceRepository serviceRepository;
 
     public void createTimeSlots(TimeSlotDTO dto) {
-        Optional<Service> optionalService = serviceRepository.findById(dto.getServiceId());
+    Optional<Service> optionalService = serviceRepository.findById(dto.getServiceId());
 
-        if (optionalService.isEmpty()) {
-            throw new RuntimeException("Service not found");
-        }
-
-        Service service = optionalService.get();
-        User provider = service.getProvider();
-        int duration = service.getDurationInMinutes();
-
-        LocalTime current = dto.getStartTime();
-        while (!current.plusMinutes(duration).isAfter(dto.getEndTime())) {
-            TimeSlot slot = new TimeSlot();
-            slot.setDate(dto.getDate());
-            slot.setStartTime(current);
-            slot.setEndTime(current.plusMinutes(duration));
-            slot.setProvider(provider);
-            slot.setService(service);
-            slot.setBooked(false);
-
-            timeSlotRepository.save(slot);
-
-            current = current.plusMinutes(duration);
-        }
+    if (optionalService.isEmpty()) {
+        throw new RuntimeException("Service not found");
     }
+
+    Service service = optionalService.get();
+    User provider = service.getProvider();
+    int duration = service.getDurationInMinutes();
+
+    LocalTime current = dto.getStartTime();
+    boolean created = false;
+
+    while (!current.plusMinutes(duration).isAfter(dto.getEndTime())) {
+        TimeSlot slot = new TimeSlot();
+        slot.setDate(dto.getDate());
+        slot.setStartTime(current);
+        slot.setEndTime(current.plusMinutes(duration));
+        slot.setProvider(provider);
+        slot.setService(service);
+        slot.setBooked(false);
+
+        timeSlotRepository.save(slot);
+        created = true;
+        current = current.plusMinutes(duration);
+    }
+
+    if (!created) {
+        System.out.println("⚠️ No time slots created. Check if startTime + duration > endTime");
+    }
+}
+
 
     // ✅ Get all time slots for a specific service
     public List<TimeSlot> getTimeSlotsByServiceId(Long serviceId) {

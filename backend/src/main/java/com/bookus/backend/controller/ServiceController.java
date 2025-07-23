@@ -89,4 +89,37 @@ public class ServiceController {
                         service.getCategory().getName()))
                 .toList();
     }
+
+    @PutMapping("/{serviceId}")
+    public ResponseEntity<?> updateService(@PathVariable Long serviceId, @RequestBody ServiceDTO dto) {
+        Optional<Service> serviceOpt = serviceRepository.findById(serviceId);
+        Optional<Category> categoryOpt = categoryRepository.findById(dto.getCategoryId());
+
+        if (serviceOpt.isEmpty() || categoryOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Invalid service or category ID");
+        }
+
+        Service service = serviceOpt.get();
+        service.setName(dto.getName());
+        service.setDescription(dto.getDescription());
+        service.setDurationInMinutes(dto.getDurationInMinutes());
+        service.setPrice(dto.getPrice());
+        service.setCategory(categoryOpt.get());
+
+        return ResponseEntity.ok(serviceRepository.save(service));
+    }
+
+
+    @DeleteMapping("/{serviceId}")
+    public ResponseEntity<?> deleteService(@PathVariable Long serviceId) {
+        if (!serviceRepository.existsById(serviceId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        serviceRepository.deleteById(serviceId);
+        return ResponseEntity.ok("✅ Service deleted successfully");
+    }
+
+
+    
 }
