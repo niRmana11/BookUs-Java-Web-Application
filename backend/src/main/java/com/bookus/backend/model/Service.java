@@ -1,14 +1,10 @@
 package com.bookus.backend.model;
-import jakarta.persistence.Table;
+
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "service")
@@ -32,6 +28,18 @@ public class Service {
     @JoinColumn(name = "category_id")
     @JsonIgnore 
     private Category category;
+
+    // ✅ Cascade delete: delete all related timeslots when service is deleted
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<TimeSlot> timeSlots;
+
+    // ✅ Cascade delete: delete all related appointments when service is deleted
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Appointment> appointments;
+
+    // Getters & Setters
 
     public long getId() {
         return id;
@@ -89,7 +97,19 @@ public class Service {
         this.category = category;
     }
 
-    
+    public List<TimeSlot> getTimeSlots() {
+        return timeSlots;
+    }
 
-    
+    public void setTimeSlots(List<TimeSlot> timeSlots) {
+        this.timeSlots = timeSlots;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 }
