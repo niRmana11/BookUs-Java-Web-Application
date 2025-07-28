@@ -47,7 +47,7 @@ public class AppointmentController {
 
    @GetMapping("/customer/{customerId}/pending")
 public ResponseEntity<List<AppointmentDTO>> getPendingAppointments(@PathVariable Long customerId) {
-    List<Appointment> pending = appointmentRepository.findByCustomer_IdAndStatus(customerId, "PENDING");
+List<Appointment> pending = appointmentRepository.findByCustomer_IdAndStatus(customerId, AppointmentStatus.PENDING);
     List<AppointmentDTO> dtos = pending.stream().map(appt ->
     new AppointmentDTO(
         appt.getId(),
@@ -90,4 +90,15 @@ public ResponseEntity<List<AppointmentDTO>> getPendingAppointments(@PathVariable
             return ResponseEntity.status(500).body("❌ Error: " + e.getMessage());
         }
     }
+
+    @DeleteMapping("/{id}")
+public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
+    try {
+        appointmentRepository.deleteById(id);
+        return ResponseEntity.ok("✅ Appointment deleted");
+    } catch (Exception e) {
+        return ResponseEntity.status(500).body("❌ Error deleting appointment: " + e.getMessage());
+    }
+}
+
 }

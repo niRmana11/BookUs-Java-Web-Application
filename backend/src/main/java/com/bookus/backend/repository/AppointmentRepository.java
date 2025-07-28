@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.bookus.backend.dto.AppointmentDTO;
 import com.bookus.backend.model.Appointment;
+import com.bookus.backend.model.AppointmentStatus;
 
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
@@ -32,6 +33,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
            "WHERE a.customer.id = :customerId")
     List<AppointmentDTO> findDTOsByCustomerId(@Param("customerId") Long customerId);
 
-    List<Appointment> findByCustomer_IdAndStatus(Long customerId, String string);
+    
+
+    List<Appointment> findByCustomer_IdAndStatus(Long customerId, AppointmentStatus pending);
     
 }
