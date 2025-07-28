@@ -8,6 +8,8 @@ export default function BrowseServices() {
   const [bookingStatus, setBookingStatus] = useState("");
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [note, setNote] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("bookus_user"));
 
@@ -43,6 +45,35 @@ export default function BrowseServices() {
   };
 
   useEffect(() => {
+  axios.get(`${API_URL}/categories`)
+    .then(res => setCategories(res.data))
+    .catch(err => console.error("Failed to load categories"));
+
+  loadServices(); // initial load
+}, []);
+
+  const loadServices = async (categoryId = null) => {
+  setLoading(true);
+  try {
+    const url = categoryId
+      ? `${API_URL}/services/category/${categoryId}`
+      : `${API_URL}/services/public`;
+
+    const res = await axios.get(url);
+    setServices(res.data);
+  } catch (err) {
+    console.error("Failed to load services", err);
+  }
+  setLoading(false);
+};
+
+  const handleCategoryClick = (id) => {
+  setSelectedCategoryId(id);
+  loadServices(id);
+};
+
+
+  useEffect(() => {
     axios
       .get(`${API_URL}/services/public`)
       .then((res) => setServices(res.data))
@@ -53,6 +84,25 @@ export default function BrowseServices() {
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Available Services</h2>
+
+      <div className="mb-4">
+  <button
+    className={`btn me-2 ${selectedCategoryId === null ? "btn-primary" : "btn-outline-primary"}`}
+    onClick={() => handleCategoryClick(null)}
+  >
+    All
+  </button>
+  {categories.map((cat) => (
+    <button
+      key={cat.id}
+      className={`btn me-2 ${selectedCategoryId === cat.id ? "btn-primary" : "btn-outline-primary"}`}
+      onClick={() => handleCategoryClick(cat.id)}
+    >
+      {cat.name}
+    </button>
+  ))}
+</div>
+
 
       {bookingStatus && (
         <div

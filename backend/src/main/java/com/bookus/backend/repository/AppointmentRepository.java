@@ -31,5 +31,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
            "LEFT JOIN a.timeSlot ts " +
            "WHERE a.customer.id = :customerId")
     List<AppointmentDTO> findDTOsByCustomerId(@Param("customerId") Long customerId);
+
+    List<Appointment> findByCustomer_IdAndStatus(Long customerId, String string);
     
 }

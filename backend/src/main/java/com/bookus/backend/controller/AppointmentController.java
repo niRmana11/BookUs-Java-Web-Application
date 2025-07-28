@@ -45,6 +45,25 @@ public class AppointmentController {
        return appointmentRepository.findDTOsByCustomerId(customerId);
    }
 
+   @GetMapping("/customer/{customerId}/pending")
+public ResponseEntity<List<AppointmentDTO>> getPendingAppointments(@PathVariable Long customerId) {
+    List<Appointment> pending = appointmentRepository.findByCustomer_IdAndStatus(customerId, "PENDING");
+    List<AppointmentDTO> dtos = pending.stream().map(appt ->
+    new AppointmentDTO(
+        appt.getId(),
+        appt.getCustomer().getName(),
+        appt.getService().getName(),
+        appt.getTimeSlot().getDate(),
+        appt.getTimeSlot().getStartTime(),
+        appt.getStatus(),
+        appt.getNote()
+    )
+).toList();
+
+    return ResponseEntity.ok(dtos);
+}
+
+
 
 
 

@@ -77,6 +77,28 @@ public class ServiceController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/category/{categoryId}")
+public ResponseEntity<List<ServiceWithSlotsDTO>> getServicesByCategory(@PathVariable Long categoryId) {
+    List<Service> services = serviceRepository.findByCategory_Id(categoryId);
+
+    List<ServiceWithSlotsDTO> response = services.stream().map(service -> {
+        List<TimeSlot> slots = timeSlotRepository.findByService_Id(service.getId());
+        return new ServiceWithSlotsDTO(
+                service.getId(),
+                service.getName(),
+                service.getDescription(),
+                service.getDurationInMinutes(),
+                service.getPrice(),
+                service.getCategory() != null ? service.getCategory().getName() : null,
+                service.getProvider() != null ? service.getProvider().getName() : null,
+                service.getProvider() != null ? service.getProvider().getId() : null,
+                slots);
+    }).toList();
+
+    return ResponseEntity.ok(response);
+}
+
+
     @GetMapping("/provider/{providerId}")
     public List<ServiceResponseDTO> getServicesByProvider(@PathVariable Long providerId) {
         return serviceRepository.findByProvider_Id(providerId).stream()
