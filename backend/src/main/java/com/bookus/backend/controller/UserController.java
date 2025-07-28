@@ -47,5 +47,18 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{id}")
+public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+    return userRepository.findById(id)
+        .map(user -> {
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            user.setPassword(updatedUser.getPassword()); // Optional: validate or hash
+            return ResponseEntity.ok(userRepository.save(user));
+        })
+        .orElse(ResponseEntity.notFound().build());
+}
+
+
 
 }

@@ -180,6 +180,10 @@ export default function ProviderDashboard() {
 
       <Link to="/createService" className="btn btn-primary mt-3 me-2">+ Add New Service</Link>
       <Link to="/provider-appointments" className="btn btn-secondary mt-3">📋 Appointments</Link>
+      <Link to="/provider-profile" className="btn btn-outline-dark mt-3 me-2">
+  👤 Profile
+</Link>
+
 
       <div className="mt-4">
         <h4>Your Services</h4>

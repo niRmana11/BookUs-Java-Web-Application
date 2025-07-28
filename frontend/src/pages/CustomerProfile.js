@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import API_URL from "../api/config";
+import { useNavigate } from "react-router-dom";
+
 
 export default function CustomerProfile() {
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [statusMessage, setStatusMessage] = useState("");
     const user = JSON.parse(localStorage.getItem("bookus_user"));
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+  localStorage.removeItem("bookus_user"); // remove user data
+  navigate("/login"); // redirect to login page
+};
+
 
     useEffect(() => {
         if (user?.id) {
@@ -61,6 +70,10 @@ export default function CustomerProfile() {
                     <p className="card-text"><strong>Email:</strong> {user?.email}</p>
                     <p className="card-text"><strong>Role:</strong> {user?.role}</p>
                 </div>
+                <button onClick={handleLogout} className="btn btn-outline-danger mt-3">
+  Logout
+</button>
+
             </div>
 
             {statusMessage && (
