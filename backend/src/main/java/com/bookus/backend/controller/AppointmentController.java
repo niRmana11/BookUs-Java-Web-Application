@@ -11,6 +11,7 @@ import com.bookus.backend.dto.AppointmentDTO;
 import com.bookus.backend.dto.BookingRequestDTO;
 import com.bookus.backend.model.Appointment;
 import com.bookus.backend.model.AppointmentStatus;
+import com.bookus.backend.model.TimeSlot;
 import com.bookus.backend.repository.AppointmentRepository;
 import com.bookus.backend.service.AppointmentService;
 
@@ -94,6 +95,11 @@ List<Appointment> pending = appointmentRepository.findByCustomer_IdAndStatus(cus
     @DeleteMapping("/{id}")
 public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
     try {
+Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment not found"));
+
+        TimeSlot slot = appointment.getTimeSlot();
+        slot.setBooked(false);
         appointmentRepository.deleteById(id);
         return ResponseEntity.ok("✅ Appointment deleted");
     } catch (Exception e) {
