@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import bgImage from "../img/back01.png";
 
+
 export default function Home() {
   return (
     <div className="min-vh-100 d-flex flex-column" style={{ backgroundColor: "#f4fbf4" }}>
@@ -18,7 +19,7 @@ export default function Home() {
       <div
         className="flex-grow-1 d-flex align-items-center justify-content-center text-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${bgImage})`,
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${bgImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           color: "white",
