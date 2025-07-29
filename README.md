@@ -39,4 +39,9 @@ Providers can manage services and time slots, while customers can easily book ap
 
 ---
 
+## User Interfaces
+### Landing Page
+<img width="1918" height="867" alt="home" src="https://github.com/user-attachments/assets/0caf5540-463c-4e0d-9ed7-dff3ec04aaad" />
+
+
 
