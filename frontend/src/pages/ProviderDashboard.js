@@ -174,176 +174,155 @@ export default function ProviderDashboard() {
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Welcome, {user?.name} 👋</h2>
-      <p>You are logged in as <strong>PROVIDER</strong>.</p>
+  <div className="min-vh-100 d-flex flex-column" style={{ backgroundColor: "#f4fbf4" }}>
+    {/* Header */}
+    <header
+      className="py-4 shadow"
+      style={{
+        background: "linear-gradient(to right, #4dbb61ff 0%, #a0e2a3ff 50%, #4dbb61ff 100%)",
+      }}
+    >
+      <div className="container text-center">
+        <h1 className="fw-bold text-black mb-1 display-6">BookUs</h1>
+        <p className="text-black mb-0 fs-5">Provider Dashboard</p>
+      </div>
+    </header>
 
-      <Link to="/createService" className="btn btn-primary mt-3 me-2">+ Add New Service</Link>
-      <Link to="/provider-appointments" className="btn btn-secondary mt-3">📋 Appointments</Link>
-      <Link to="/provider-profile" className="btn btn-outline-dark mt-3 me-2">
-  👤 Profile
-</Link>
+    {/* Main Content */}
+    <div className="container flex-grow-1 py-5">
+      <div className="text-center mb-4">
+        <h2>Welcome, {user?.name} 👋</h2>
+        <p className="text-muted">You are logged in as <strong>PROVIDER</strong></p>
+        <div className="d-flex justify-content-center flex-wrap gap-3 mt-3">
+          <Link to="/createService" className="btn btn-success">+ Add New Service</Link>
+          <Link to="/provider-appointments" className="btn btn-outline-dark">📋 View Appointments</Link>
+          <Link to="/provider-profile" className="btn btn-outline-success">👤 Profile</Link>
+        </div>
+      </div>
 
+      <h4 className="mb-3">🛠️ Your Services</h4>
 
-      <div className="mt-4">
-        <h4>Your Services</h4>
+      {successMsg && <div className="alert alert-success">{successMsg}</div>}
+      {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
 
-        {successMsg && <div className="alert alert-success">{successMsg}</div>}
-        {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
-
-        {services.length === 0 ? (
-          <p>No services found.</p>
-        ) : (
-          <div className="row">
-            {services.map((service) => (
-              <div className="col-md-6 mb-3" key={service.id}>
-                <div className="card">
-                  <div className="card-body">
-                    {editServiceId === service.id ? (
-                      <form onSubmit={submitEditService}>
-                        <div className="mb-2">
+      {services.length === 0 ? (
+        <div className="alert alert-info text-center">No services found.</div>
+      ) : (
+        <div className="row">
+          {services.map((service) => (
+            <div className="col-md-6 mb-4" key={service.id}>
+              <div className="card shadow-sm h-100">
+                <div className="card-body">
+                  {editServiceId === service.id ? (
+                    <form onSubmit={submitEditService}>
+                      {/* Edit Form */}
+                      {["name", "description", "price", "durationInMinutes"].map((field, idx) => (
+                        <div className="mb-2" key={idx}>
                           <input
-                            type="text"
+                            type={field === "price" || field === "durationInMinutes" ? "number" : "text"}
                             className="form-control"
-                            name="name"
-                            placeholder="Name"
-                            value={editForm.name}
+                            name={field}
+                            placeholder={field}
+                            value={editForm[field]}
                             onChange={handleEditInputChange}
                             required
                           />
                         </div>
-                        <div className="mb-2">
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="description"
-                            placeholder="Description"
-                            value={editForm.description}
-                            onChange={handleEditInputChange}
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <input
-                            type="number"
-                            className="form-control"
-                            name="price"
-                            placeholder="Price"
-                            value={editForm.price}
-                            onChange={handleEditInputChange}
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <input
-                            type="number"
-                            className="form-control"
-                            name="durationInMinutes"
-                            placeholder="Duration"
-                            value={editForm.durationInMinutes}
-                            onChange={handleEditInputChange}
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <select
-                            className="form-control"
-                            name="categoryId"
-                            value={editForm.categoryId}
-                            onChange={handleEditInputChange}
-                            required
-                          >
-                            <option value="">Select Category</option>
-                            {categories.map((cat) => (
-                              <option key={cat.id} value={cat.id}>
-                                {cat.name}
-                              </option>
-                            ))}
-                          </select>
+                      ))}
+                      <div className="mb-2">
+                        <select
+                          className="form-control"
+                          name="categoryId"
+                          value={editForm.categoryId}
+                          onChange={handleEditInputChange}
+                          required
+                        >
+                          <option value="">Select Category</option>
+                          {categories.map((cat) => (
+                            <option key={cat.id} value={cat.id}>{cat.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <button className="btn btn-sm btn-success w-100">✅ Update</button>
+                    </form>
+                  ) : (
+                    <>
+                      <h5 className="card-title text-success">{service.name}</h5>
+                      <p className="card-text">{service.description}</p>
+                      <p>💰 {service.price} LKR</p>
+                      <p>🕒 {service.durationInMinutes} minutes</p>
+                      <p>📂 Category: {service.categoryName}</p>
+                    </>
+                  )}
 
-                        </div>
-                        <button className="btn btn-sm btn-success w-100">✅ Update</button>
-                      </form>
-                    ) : (
-                      <>
-                        <h5 className="card-title">{service.name}</h5>
-                        <p className="card-text">{service.description}</p>
-                        <p>💰 {service.price} LKR</p>
-                        <p>🕒 {service.durationInMinutes} minutes</p>
-                        <p>📂 Category: {service.categoryName}</p>
-                      </>
-                    )}
+                  <button
+                    className="btn btn-sm btn-outline-success mb-2"
+                    onClick={() =>
+                      setShowFormForService(
+                        showFormForService === service.id ? null : service.id
+                      )
+                    }
+                  >
+                    ➕ Add Time Slot
+                  </button>
 
-                    <button
-                      className="btn btn-sm btn-outline-success mb-2"
-                      onClick={() =>
-                        setShowFormForService(
-                          showFormForService === service.id ? null : service.id
-                        )
-                      }
-                    >
-                      ➕ Add Time Slot
-                    </button>
-
-                    {showFormForService === service.id && (
-                      <form onSubmit={(e) => handleTimeSlotSubmit(e, service.id)} className="mt-2">
-                        <div className="mb-2">
-                          <label>Date</label>
+                  {showFormForService === service.id && (
+                    <form onSubmit={(e) => handleTimeSlotSubmit(e, service.id)} className="mt-2">
+                      {["date", "startTime", "endTime"].map((field, idx) => (
+                        <div className="mb-2" key={idx}>
+                          <label>{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                           <input
-                            type="date"
-                            name="date"
+                            type={field === "date" ? "date" : "time"}
+                            name={field}
                             className="form-control"
-                            value={formData.date}
+                            value={formData[field]}
                             onChange={handleInputChange}
                             required
                           />
                         </div>
-                        <div className="mb-2">
-                          <label>Start Time</label>
-                          <input
-                            type="time"
-                            name="startTime"
-                            className="form-control"
-                            value={formData.startTime}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <div className="mb-2">
-                          <label>End Time</label>
-                          <input
-                            type="time"
-                            name="endTime"
-                            className="form-control"
-                            value={formData.endTime}
-                            onChange={handleInputChange}
-                            required
-                          />
-                        </div>
-                        <button className="btn btn-sm btn-success w-100">Submit</button>
-                      </form>
-                    )}
+                      ))}
+                      <button className="btn btn-sm btn-success w-100">Submit</button>
+                    </form>
+                  )}
 
-                    <h6 className="mt-3">🗓️ Time Slots:</h6>
-                    {renderTimeSlots(timeSlots[service.id])}
-                  </div>
-                  <div className="d-flex justify-content-between p-2">
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => startEditService(service)}
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => deleteService(service.id)}
-                    >
-                      🗑 Delete
-                    </button>
-                  </div>
+                  <h6 className="mt-3">🗓️ Time Slots:</h6>
+                  {renderTimeSlots(timeSlots[service.id])}
+                </div>
+
+                <div className="d-flex justify-content-between p-2">
+                  <button
+                    className="btn btn-sm btn-outline-primary"
+                    onClick={() => startEditService(service)}
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button
+                    className="btn btn-sm btn-outline-danger"
+                    onClick={() => deleteService(service.id)}
+                  >
+                    🗑 Delete
+                  </button>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  );
+
+    {/* Footer */}
+    <footer
+      className="py-3 text-center mt-auto"
+      style={{
+        background: "linear-gradient(to right, #4dbb61ff 0%, #a0e2a3ff 50%, #4dbb61ff 100%)",
+        color: "black",
+      }}
+    >
+      <div className="container">
+        <small className="text-black-80">© 2025 BookUs — All rights reserved.</small>
+      </div>
+    </footer>
+  </div>
+);
+
 }
