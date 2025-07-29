@@ -102,7 +102,7 @@ export default function CustomerProfile() {
       {/* Profile & Appointments */}
       <div className="container flex-grow-1 py-5">
         <div className="mb-4">
-          <h2 className="text-center">👤 My Profile</h2>
+          <h2 className="text-center">My Profile</h2>
           <div className="card shadow-sm p-4">
             <div className="card-body">
               {editing ? (
@@ -138,10 +138,10 @@ export default function CustomerProfile() {
                     />
                   </div>
                   <button type="submit" className="btn btn-success me-2">
-                    💾 Save
+                    Save
                   </button>
                   <button type="button" className="btn btn-secondary" onClick={() => setEditing(false)}>
-                    ✖ Cancel
+                    Cancel
                   </button>
                 </form>
               ) : (
@@ -150,14 +150,14 @@ export default function CustomerProfile() {
                   <p><strong>Email:</strong> {user?.email}</p>
                   <p><strong>Role:</strong> {user?.role}</p>
                   <button className="btn btn-outline-primary mt-2" onClick={() => setEditing(true)}>
-                    ✏️ Edit Profile
+                    Edit Profile
                   </button>
                 </>
               )}
             </div>
             <div className="text-end px-4 pb-2">
               <button className="btn btn-outline-danger" onClick={handleLogout}>
-                🔒 Logout
+                Logout
               </button>
             </div>
           </div>

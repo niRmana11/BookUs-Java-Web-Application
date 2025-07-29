@@ -67,7 +67,7 @@ export default function CustomerDashboard() {
       {/* Dashboard Content */}
       <div className="container flex-grow-1 py-5">
         <div className="mb-4 text-center">
-          <h2>Welcome, {user?.name} 👋</h2>
+          <h2>Welcome, {user?.name}</h2>
           <p className="text-muted">You are logged in as <strong>CUSTOMER</strong></p>
           <div className="d-flex justify-content-center gap-3 mt-3 flex-wrap">
             <Link to="/browse" className="btn btn-success px-4">
@@ -106,13 +106,13 @@ export default function CustomerDashboard() {
                               className="btn btn-sm btn-success"
                               onClick={() => handleSave(appt.id)}
                             >
-                              💾 Save
+                              Save
                             </button>
                             <button
                               className="btn btn-sm btn-secondary"
                               onClick={() => setEditingId(null)}
                             >
-                              ✖ Cancel
+                              Cancel
                             </button>
                           </div>
                         </>
@@ -124,13 +124,13 @@ export default function CustomerDashboard() {
                               className="btn btn-sm btn-outline-primary"
                               onClick={() => handleEdit(appt.id, appt.note)}
                             >
-                              ✏️ Edit
+                              Edit
                             </button>
                             <button
                               className="btn btn-sm btn-outline-danger"
                               onClick={() => handleDelete(appt.id)}
                             >
-                              🗑 Delete
+                              Delete
                             </button>
                           </div>
                         </>

@@ -191,16 +191,16 @@ export default function ProviderDashboard() {
     {/* Main Content */}
     <div className="container flex-grow-1 py-5">
       <div className="text-center mb-4">
-        <h2>Welcome, {user?.name} 👋</h2>
+        <h2>Welcome, {user?.name}</h2>
         <p className="text-muted">You are logged in as <strong>PROVIDER</strong></p>
         <div className="d-flex justify-content-center flex-wrap gap-3 mt-3">
           <Link to="/createService" className="btn btn-success">+ Add New Service</Link>
-          <Link to="/provider-appointments" className="btn btn-outline-dark">📋 View Appointments</Link>
-          <Link to="/provider-profile" className="btn btn-outline-success">👤 Profile</Link>
+          <Link to="/provider-appointments" className="btn btn-outline-dark">View Appointments</Link>
+          <Link to="/provider-profile" className="btn btn-outline-success">Profile</Link>
         </div>
       </div>
 
-      <h4 className="mb-3">🛠️ Your Services</h4>
+      <h4 className="mb-3">Your Services</h4>
 
       {successMsg && <div className="alert alert-success">{successMsg}</div>}
       {errorMsg && <div className="alert alert-danger">{errorMsg}</div>}
@@ -243,7 +243,7 @@ export default function ProviderDashboard() {
                           ))}
                         </select>
                       </div>
-                      <button className="btn btn-sm btn-success w-100">✅ Update</button>
+                      <button className="btn btn-sm btn-success w-100">Update</button>
                     </form>
                   ) : (
                     <>
@@ -294,13 +294,13 @@ export default function ProviderDashboard() {
                     className="btn btn-sm btn-outline-primary"
                     onClick={() => startEditService(service)}
                   >
-                    ✏️ Edit
+                    Edit
                   </button>
                   <button
                     className="btn btn-sm btn-outline-danger"
                     onClick={() => deleteService(service.id)}
                   >
-                    🗑 Delete
+                    Delete
                   </button>
                 </div>
               </div>

@@ -54,7 +54,7 @@ export default function ProviderProfile() {
 
     {/* Profile Content */}
     <div className="container flex-grow-1 py-5" style={{ maxWidth: "700px" }}>
-      <h3 className="mb-4 text-center">👤 Provider Profile</h3>
+      <h3 className="mb-4 text-center">Provider Profile</h3>
 
       <div className="card shadow-sm">
         <div className="card-body">
@@ -92,14 +92,14 @@ export default function ProviderProfile() {
               </div>
               <div className="d-flex justify-content-end gap-2">
                 <button type="submit" className="btn btn-success">
-                  ✅ Save
+                  Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setEditing(false)}
                   className="btn btn-secondary"
                 >
-                  ✖ Cancel
+                  Cancel
                 </button>
               </div>
             </form>
@@ -116,7 +116,7 @@ export default function ProviderProfile() {
                 onClick={() => setEditing(true)}
                 className="btn btn-outline-primary mt-2"
               >
-                ✏️ Edit Profile
+                Edit Profile
               </button>
             </>
           )}

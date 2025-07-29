@@ -172,7 +172,7 @@ export default function BrowseServices() {
           <div className="modal-dialog">
             <div className="modal-content border-success">
               <div className="modal-header bg-success text-white">
-                <h5 className="modal-title">📝 Confirm Booking</h5>
+                <h5 className="modal-title">Confirm Booking</h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -198,7 +198,7 @@ export default function BrowseServices() {
                   className="btn btn-success"
                   onClick={() => handleBook(selectedSlot.slot, selectedSlot.service)}
                 >
-                  ✅ Confirm Booking
+                  Confirm Booking
                 </button>
                 <button
                   className="btn btn-secondary"

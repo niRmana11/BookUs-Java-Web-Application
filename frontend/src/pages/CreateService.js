@@ -85,7 +85,7 @@ export default function CreateService() {
     {/* Main Form Content */}
     <div className="container flex-grow-1 py-5" style={{ maxWidth: "600px" }}>
       <div className="text-center mb-4">
-        <h3 className="fw-semibold">🛠️ Add Your Service</h3>
+        <h3 className="fw-semibold">Add Your Service</h3>
         <p className="text-muted">Fill in the form below to create a new service offering.</p>
       </div>
 
@@ -159,7 +159,7 @@ export default function CreateService() {
           </select>
         </div>
 
-        <button className="btn btn-success w-100">✅ Create Service</button>
+        <button className="btn btn-success w-100">Create Service</button>
       </form>
     </div>
 
