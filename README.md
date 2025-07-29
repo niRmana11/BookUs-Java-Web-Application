@@ -42,22 +42,31 @@ Providers can manage services and time slots, while customers can easily book ap
 ## User Interfaces
 ### Landing Page
 <img width="1918" height="867" alt="home" src="https://github.com/user-attachments/assets/0caf5540-463c-4e0d-9ed7-dff3ec04aaad" />
+
 ### Login Page
 <img width="1918" height="860" alt="login" src="https://github.com/user-attachments/assets/4c8b57d4-e4a4-45e3-8d87-86957fba9f56" />
+
 ### Register Page
 <img width="1918" height="863" alt="register" src="https://github.com/user-attachments/assets/76c9c893-1670-49f3-a88a-2c7a32821561" />
+
 ### Customer Dashboard Page
 <img width="1918" height="862" alt="customer dashboard" src="https://github.com/user-attachments/assets/34fbf756-03d3-4500-8798-c0101e395923" />
+
 ### Browse Service Page
 <img width="1918" height="862" alt="browse" src="https://github.com/user-attachments/assets/b24a3f88-f12c-4a73-bd93-ce59d42e38a8" />
+
 ### Customer Profile Page
 <img width="1918" height="863" alt="customer profile" src="https://github.com/user-attachments/assets/81e91c4d-2a35-4635-8fa0-3d5bd8beb14c" />
+
 ### Provider Dashboard Page
 <img width="1918" height="862" alt="provider dashboard" src="https://github.com/user-attachments/assets/5db138f1-322b-4d72-9ff3-6d3b152856fb" />
+
 ### Create Service Page
 <img width="1918" height="862" alt="create service" src="https://github.com/user-attachments/assets/faad5d1a-b926-4f64-8c2f-b84a687f1aa3" />
+
 ### Appointments Page
 <img width="1918" height="863" alt="appointments" src="https://github.com/user-attachments/assets/48f6fd23-6293-4948-a259-a5baf7cd47e5" />
+
 ### Provider Profile Page
 <img width="1918" height="862" alt="provider profile" src="https://github.com/user-attachments/assets/614d21cd-2290-4582-b284-6feba9ffe698" />
 
